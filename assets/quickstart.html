@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jackpoint — You're in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E0F13; --card:#1A1C22; --card2:#202329;
+    --text:#ECECEC; --dim:#9AA0AB; --line:#2B2F37;
+    --teal:#5EEAD4; --violet:#A78BFA; --amber:#F4B860;
+  }
+  *{box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  @page{ size:148mm 210mm; margin:0; }           /* A5 portrait booklet */
+  html,body{margin:0;padding:0;background:var(--ink);color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;}
+  .page{position:relative; width:148mm; height:210mm; padding:16mm 15mm 14mm;
+    page-break-after:always; overflow:hidden;
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(94,234,212,.06), transparent 60%),
+      radial-gradient(100% 70% at 110% 110%, rgba(167,139,250,.07), transparent 55%),
+      var(--ink);}
+  .page:last-child{page-break-after:auto;}
+  /* dotted-grid corner texture */
+  .page::after{content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:14px 14px;
+    -webkit-mask-image:radial-gradient(80% 60% at 50% 40%, transparent 55%, #000 100%);
+            mask-image:radial-gradient(80% 60% at 50% 40%, transparent 55%, #000 100%);}
+  h1{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30pt; line-height:1.05;
+     margin:0 0 6mm; letter-spacing:-.5px;}
+  h2{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18pt; line-height:1.15;
+     margin:0 0 5mm; letter-spacing:-.3px;}
+  .kicker{font-family:'JetBrains Mono',monospace; font-size:8pt; letter-spacing:3px;
+     text-transform:uppercase; color:var(--teal); margin:0 0 4mm;}
+  p{font-size:11.5pt; line-height:1.62; color:var(--text); margin:0 0 4mm;}
+  p.dim{color:var(--dim);} .lead{font-size:13pt; color:var(--dim);}
+  .chip{font-family:'JetBrains Mono',monospace; font-weight:700; font-size:10.5pt;
+    color:var(--ink); background:linear-gradient(180deg,#7ff0dd,var(--teal));
+    padding:2.5px 10px; border-radius:8px; white-space:nowrap;
+    box-shadow:0 0 0 1px rgba(94,234,212,.4), 0 6px 18px rgba(94,234,212,.18);}
+  .chip.big{font-size:15pt; padding:6px 16px; border-radius:11px;}
+  .pill{font-family:'JetBrains Mono',monospace; font-size:7.5pt; font-weight:700;
+    letter-spacing:.5px; padding:2px 8px; border-radius:20px; text-transform:uppercase;}
+  .pill.free{color:var(--amber); border:1px solid rgba(244,184,96,.5); background:rgba(244,184,96,.08);}
+  .pill.paid{color:var(--violet); border:1px solid rgba(167,139,250,.5); background:rgba(167,139,250,.08);}
+  .pill.off{color:var(--teal); border:1px solid rgba(94,234,212,.5); background:rgba(94,234,212,.08);}
+  .key{font-family:'JetBrains Mono',monospace; font-size:8.5pt; font-weight:700; color:var(--text);
+    background:var(--card2); border:1px solid var(--line); border-bottom-width:2px;
+    border-radius:6px; padding:2px 7px;}
+  .foot{position:absolute; left:15mm; right:15mm; bottom:8mm;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--dim);
+    letter-spacing:1px; border-top:1px solid var(--line); padding-top:3mm;}
+  .wordmark{color:var(--teal); font-weight:700;}
+  .card{background:linear-gradient(180deg,var(--card),#16181d); border:1px solid var(--line);
+    border-radius:16px; padding:5mm;}
+  /* terminal mock */
+  .term{background:#070809; border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    font-family:'JetBrains Mono',monospace; font-size:9pt;}
+  .term .bar{display:flex; gap:5px; padding:7px 10px; background:#121317; border-bottom:1px solid var(--line);}
+  .term .bar i{width:9px;height:9px;border-radius:50%;display:block;}
+  .term .bar i:nth-child(1){background:#ff5f57;} .term .bar i:nth-child(2){background:#febc2e;} .term .bar i:nth-child(3){background:#28c840;}
+  .term .body{padding:10px 12px; line-height:1.7;}
+  .term .pr{color:var(--teal);} .term .you{color:#fff;} .term .ai{color:var(--dim);}
+  .cur{display:inline-block;width:8px;height:14px;background:var(--teal);vertical-align:-2px;
+    box-shadow:0 0 8px var(--teal);}
+  /* toolkit cards */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:4mm;}
+  .tool{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:4mm;}
+  .tool .nm{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:12pt; margin-bottom:1.5mm;}
+  .tool .ds{font-size:8.5pt; color:var(--dim); line-height:1.45; margin:2mm 0 3mm; min-height:22pt;}
+  .tool .rowx{display:flex; align-items:center; justify-content:space-between; gap:4px;}
+  .map{display:flex; align-items:center; justify-content:space-between; margin-top:6mm;}
+  .node{display:flex; flex-direction:column; align-items:center; gap:2mm;}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);}
+  .node span{font-family:'JetBrains Mono',monospace; font-size:7pt; color:var(--dim);}
+  .seg{flex:1;height:1px;background:linear-gradient(90deg,var(--teal),var(--violet));opacity:.5;}
+  .two{display:grid; grid-template-columns:1fr auto 1fr; gap:4mm; align-items:center;}
+  .center-emblem{display:flex;flex-direction:column;align-items:center;gap:2mm;
+    font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--teal);}
+  .steps{counter-reset:s; margin:4mm 0;}
+  .steps .st{display:flex; gap:3mm; margin-bottom:3mm; align-items:flex-start;}
+  .steps .st b{flex:none; width:22px;height:22px;border-radius:50%;
+    background:rgba(94,234,212,.12); border:1px solid rgba(94,234,212,.5); color:var(--teal);
+    font-family:'JetBrains Mono',monospace; font-size:9pt; display:flex;align-items:center;justify-content:center;}
+  .steps .st p{margin:0; font-size:10.5pt;}
+  .fix{display:flex; gap:3mm; padding:3mm 0; border-bottom:1px solid var(--line);}
+  .fix:last-child{border-bottom:0;}
+  .fix .ic{flex:none;width:26px;height:26px;border-radius:8px;background:rgba(244,184,96,.1);
+    border:1px solid rgba(244,184,96,.4); display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:12pt;}
+  .fix .q{font-weight:600; font-size:10.5pt; margin:0 0 1mm;}
+  .fix .a{font-size:9.5pt; color:var(--dim); margin:0; line-height:1.5;}
+  /* COVER */
+  .cover{display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; height:100%;}
+  .cover h1{font-size:42pt; margin:6mm 0 3mm;}
+  .cover .tg{font-size:11pt; color:var(--dim); max-width:95mm; line-height:1.6;}
+  .glow{filter:drop-shadow(0 0 14px rgba(94,234,212,.55)) drop-shadow(0 0 26px rgba(167,139,250,.35));}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="page">
+  <div class="cover">
+    <svg class="glow" width="150" height="190" viewBox="0 0 150 190" fill="none">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#5EEAD4"/><stop offset="1" stop-color="#A78BFA"/>
+        </linearGradient>
+      </defs>
+      <circle cx="75" cy="70" r="42" stroke="url(#g1)" stroke-width="1.6" opacity=".9"/>
+      <circle cx="75" cy="70" r="30" stroke="url(#g1)" stroke-width="1" opacity=".5"/>
+      <circle cx="75" cy="70" r="9" fill="none" stroke="#5EEAD4" stroke-width="2"/>
+      <circle cx="75" cy="70" r="2.5" fill="#5EEAD4"/>
+      <!-- key shaft -->
+      <path d="M75 79 L75 150" stroke="url(#g1)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M75 128 L90 128 M75 140 L86 140" stroke="#A78BFA" stroke-width="3" stroke-linecap="round"/>
+      <!-- circuit nodes -->
+      <circle cx="33" cy="70" r="2" fill="#A78BFA"/><path d="M33 70 H45" stroke="#A78BFA" stroke-width="1" opacity=".6"/>
+      <circle cx="117" cy="70" r="2" fill="#5EEAD4"/><path d="M105 70 H117" stroke="#5EEAD4" stroke-width="1" opacity=".6"/>
+      <circle cx="75" cy="20" r="2" fill="#5EEAD4"/><path d="M75 28 V40" stroke="#5EEAD4" stroke-width="1" opacity=".5"/>
+      <!-- terminal cursor line -->
+      <path d="M40 172 H96" stroke="#2B2F37" stroke-width="1"/>
+      <rect x="40" y="167" width="8" height="11" rx="1.5" fill="#5EEAD4"/>
+    </svg>
+    <div class="kicker" style="margin-top:8mm">access granted</div>
+    <h1>You're in.</h1>
+    <div class="tg">jackpoint set up your AI toolkit on this Mac. This little book shows you how to talk to it. No experience needed — just follow along.</div>
+  </div>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>quick-start</span></div>
+</section>
+
+<!-- ============ 1 WELCOME ============ -->
+<section class="page">
+  <div class="kicker">01 · welcome</div>
+  <h1>Welcome — you're in.</h1>
+  <p>Someone just set up your Mac with <span class="wordmark">jackpoint</span>, and it did something quietly powerful: it installed a set of AI assistants right onto this computer and got them ready for you. You don't have to download anything or figure out which app to buy. It's already done.</p>
+  <p>Think of these assistants like very smart helpers you can talk to in plain English — ask a question, get an answer, get help writing, planning, or fixing something. Some of them even run completely on your own machine, so they work without internet.</p>
+  <p class="dim">This book walks you through it one tiny step at a time. You don't need to be "technical." If you can type a word and press Enter, you're ready. There's nothing here you can break.</p>
+  <div class="map">
+    <div class="node"><div class="dot"></div><span>gemini</span></div><div class="seg"></div>
+    <div class="node"><div class="dot"></div><span>claude</span></div><div class="seg"></div>
+    <div class="node"><div class="dot"></div><span>codex</span></div><div class="seg"></div>
+    <div class="node"><div class="dot"></div><span>qwen</span></div><div class="seg"></div>
+    <div class="node"><div class="dot"></div><span>opencode</span></div>
+  </div>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>01</span></div>
+</section>
+
+<!-- ============ 2 TERMINAL ============ -->
+<section class="page">
+  <div class="kicker">02 · the terminal</div>
+  <h2>First, let's open the Terminal</h2>
+  <p>All of your AI assistants live in one place: an app called <b>Terminal</b>. It's a plain little window where you type a word, press Enter, and the computer responds. That's the whole idea. It looks bare on purpose — it's fast, not fancy.</p>
+  <div class="steps">
+    <div class="st"><b>1</b><p>Hold <span class="key">⌘ Command</span> and tap <span class="key">Space</span>. A search box pops up.</p></div>
+    <div class="st"><b>2</b><p>Type the word <span class="chip">Terminal</span></p></div>
+    <div class="st"><b>3</b><p>Press <span class="key">Enter</span>. A window opens with a blinking line.</p></div>
+  </div>
+  <div class="term">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body"><span class="pr">your-mac ~ %</span> <span class="cur"></span></div>
+  </div>
+  <p class="dim" style="margin-top:4mm">That blinking block is the cursor. It's just waiting for you to type something and press Enter. You'll use this same ⌘-Space trick to open any app on a Mac — you just learned a real shortcut.</p>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>02</span></div>
+</section>
+
+<!-- ============ 3 FIRST WIN ============ -->
+<section class="page">
+  <div class="kicker">03 · your first win</div>
+  <h2>Say hi to Gemini <span class="pill free">free</span></h2>
+  <p>Let's get a real answer on screen in under a minute. Gemini is Google's AI assistant, and it's free — you sign in with the Google account you already have.</p>
+  <p>In the Terminal, type this one word and press Enter:</p>
+  <div style="text-align:center; margin:5mm 0;"><span class="chip big">gemini</span></div>
+  <div class="term">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body">
+      <div class="you">&gt; Explain what a terminal is, like I'm five.</div>
+      <div class="ai">A terminal is a little window where you type words to</div>
+      <div class="ai">tell the computer what to do, and it types back. That's it!</div>
+      <div><span class="pr">&gt;</span> <span class="cur"></span></div>
+    </div>
+  </div>
+  <p style="margin-top:4mm">The first time, it opens your browser to sign in with Google. Pick your account, click <b>Allow</b>, come back. You only do this once. Then just talk to it. When you're done, type <span class="chip">/quit</span> and press Enter.</p>
+  <p class="dim">Free, no credit card, no setup. That's why we started here.</p>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>03</span></div>
+</section>
+
+<!-- ============ 4 FIVE ASSISTANTS ============ -->
+<section class="page">
+  <div class="kicker">04 · the toolkit</div>
+  <h2>Meet your assistants</h2>
+  <p class="dim" style="font-size:10pt">To start any of them: open Terminal, type its name, press Enter. Keep this page handy.</p>
+  <div class="grid" style="margin-top:4mm">
+    <div class="tool"><div class="nm">Gemini</div><div class="ds">Everyday all-rounder. Questions, explanations, writing, brainstorming.</div><div class="rowx"><span class="chip">gemini</span><span class="pill free">free</span></div></div>
+    <div class="tool"><div class="nm">Claude</div><div class="ds">Thoughtful coding &amp; writing partner. Careful work, long docs.</div><div class="rowx"><span class="chip">claude</span><span class="pill paid">paid</span></div></div>
+    <div class="tool"><div class="nm">Codex</div><div class="ds">Coding-focused agent for building and fixing software.</div><div class="rowx"><span class="chip">codex</span><span class="pill paid">paid</span></div></div>
+    <div class="tool"><div class="nm">Qwen</div><div class="ds">Runs on YOUR machine. Free, works offline, nothing leaves the Mac.</div><div class="rowx"><span class="chip">qwen</span><span class="pill off">free · offline</span></div></div>
+  </div>
+  <div class="tool" style="margin-top:4mm"><div class="nm">opencode</div><div class="ds" style="min-height:auto">An open coding assistant you can point at different AI "brains." Free to run; some brains it connects to may need their own sign-in.</div><div class="rowx"><span class="chip">opencode</span><span class="pill off">free</span></div></div>
+  <p class="dim" style="margin-top:4mm; font-size:9.5pt">Don't memorize this. Start with <span class="chip">gemini</span>, try the others when curious. Opening one can't hurt anything.</p>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>04</span></div>
+</section>
+
+<!-- ============ 5 OFFLINE ============ -->
+<section class="page">
+  <div class="kicker">05 · offline &amp; private</div>
+  <h2>The ones that need no internet</h2>
+  <p>Two assistants live entirely on this Mac. They send nothing over the internet and keep working on a plane or with the wifi off.</p>
+  <div class="two" style="margin:6mm 0;">
+    <div class="card" style="text-align:center"><div class="kicker" style="margin:0 0 3mm">the terminal way</div>
+      <span class="chip">chat</span><div style="height:3mm"></div><span class="chip">qwen-uc</span>
+      <p class="dim" style="font-size:8.5pt;margin-top:3mm">type it, just talk</p></div>
+    <div class="center-emblem">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M12 2 L20 6 V12 C20 17 16 21 12 22 C8 21 4 17 4 12 V6 Z" stroke="#5EEAD4" stroke-width="1.5"/><path d="M9 12 l2 2 l4-4" stroke="#5EEAD4" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>local model</span><span style="color:var(--dim)">lives on this Mac</span></div>
+    <div class="card" style="text-align:center"><div class="kicker" style="margin:0 0 3mm">the app way</div>
+      <div style="font-family:'Space Grotesk';font-weight:600;font-size:12pt">Ollama</div>
+      <p class="dim" style="font-size:8.5pt;margin-top:3mm">open it like any app,<br>type in the chat box</p></div>
+  </div>
+  <p>Prefer not to use the Terminal at all? You don't have to. jackpoint also installed an app called <b>Ollama</b> — open it the normal way (⌘-Space, type Ollama, Enter) and a regular window opens where you chat like any messaging app. Same private assistant, friendly window.</p>
+  <p class="dim">Two doors to the same room. Use whichever feels comfortable.</p>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>05</span></div>
+</section>
+
+<!-- ============ 6 JACKPOINT CMD ============ -->
+<section class="page">
+  <div class="kicker">06 · home base</div>
+  <h2>Forgot what's available?</h2>
+  <p>You won't remember all the names, and you don't need to. There's one magic word that shows you everything, anytime. Open Terminal and type:</p>
+  <div style="text-align:center; margin:5mm 0;"><span class="chip big">jackpoint</span></div>
+  <div class="term">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="body" style="font-size:8.5pt; line-height:1.9">
+      <div style="color:var(--teal)">YOUR AI TOOLKIT — type any of these:</div>
+      <div><span class="you">gemini</span> <span class="ai">→ everyday assistant (free)</span></div>
+      <div><span class="you">claude</span> <span class="ai">→ careful coding &amp; writing (paid)</span></div>
+      <div><span class="you">codex</span>&nbsp; <span class="ai">→ build &amp; fix software (paid)</span></div>
+      <div><span class="you">chat</span>&nbsp;&nbsp; <span class="ai">→ offline, private, no account</span></div>
+      <div><span class="you">qwen-uc</span> <span class="ai">→ uncensored offline model</span></div>
+    </div>
+  </div>
+  <p style="margin-top:4mm">Press Enter and it prints the full menu — every assistant, free or paid, and the exact word to start it. It's this whole booklet, built into your computer.</p>
+  <p class="dim">Whenever you feel lost, that's the move: type <span class="chip">jackpoint</span> and read the list. It's the front desk — it always knows what's in the building.</p>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>06</span></div>
+</section>
+
+<!-- ============ 7 TROUBLESHOOT ============ -->
+<section class="page">
+  <div class="kicker">07 · if it seems stuck</div>
+  <h2>It's almost always easy</h2>
+  <p class="dim">New things feel breakable. These almost never are. Three little hiccups people hit, and the fix for each.</p>
+  <div style="margin-top:4mm">
+    <div class="fix"><div class="ic">◎</div><div><p class="q">Nothing happens when I type?</p><p class="a">Click inside the Terminal window first so it's listening, and check you pressed <span class="key">Enter</span>. Still quiet? Open a fresh one with <span class="key">⌘ N</span> and try again.</p></div></div>
+    <div class="fix"><div class="ic">⌕</div><div><p class="q">It says "command not found"?</p><p class="a">Usually a small typo, or setup is still finishing. Check the spelling, then fully quit Terminal with <span class="key">⌘ Q</span>, wait a minute, reopen, and try once more.</p></div></div>
+    <div class="fix"><div class="ic">⌁</div><div><p class="q">It mentions "no internet"?</p><p class="a">The online ones (gemini, claude, codex) need wifi. Check you're connected — or switch to an offline one: type <span class="chip">chat</span> and keep working with no internet at all.</p></div></div>
+  </div>
+  <div class="card" style="margin-top:5mm; text-align:center; border-color:rgba(94,234,212,.3)">
+    <p style="margin:0; font-size:10.5pt">The universal fix: <b>close Terminal, reopen it, try again.</b><br><span class="dim" style="font-size:9pt">You really can't break anything by typing.</span></p>
+  </div>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>07</span></div>
+</section>
+
+<!-- ============ 8 CLOSE ============ -->
+<section class="page">
+  <div class="cover">
+    <svg class="glow" width="120" height="120" viewBox="0 0 150 150" fill="none">
+      <circle cx="75" cy="75" r="46" stroke="url(#g1)" stroke-width="1.6"/>
+      <circle cx="75" cy="75" r="30" stroke="#A78BFA" stroke-width="1" opacity=".6"/>
+      <circle cx="75" cy="75" r="11" fill="rgba(94,234,212,.15)" stroke="#5EEAD4" stroke-width="2"/>
+      <path d="M68 75 l5 5 l9-10" stroke="#5EEAD4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="kicker" style="margin-top:7mm">unlocked</div>
+    <h1 style="font-size:26pt">You're a terminal<br>person now.</h1>
+    <p class="tg">You opened a tool most people are scared of, typed a command, and talked to an AI — the same doorway engineers walk through every day. Pick one assistant, ask it real things, and it gets natural fast.</p>
+    <p class="tg" style="color:var(--teal); margin-top:5mm">Forget a name? Open Terminal, type <span class="chip">jackpoint</span>.</p>
+    <p style="font-family:'Space Grotesk'; font-weight:600; margin-top:8mm">Welcome in. We're glad you're here.</p>
+  </div>
+  <div class="foot"><span class="wordmark">jackpoint</span><span>github.com/DareDev256/jackpoint</span></div>
+</section>
+
+</body>
+</html>
