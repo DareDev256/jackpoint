@@ -105,6 +105,14 @@ sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
 
 `install.sh` checks for the tools you asked for, installs Node only if Gemini or qwen-code need it (to a user-writable npm prefix so there's no `sudo` and no permission errors), installs each CLI through its official method, wires up your PATH and the `jackpoint` cheatsheet, and logs everything to `~/.jackpoint.log`. Native installers go to `~/.local/bin`; npm tools go to `~/.npm-global`.
 
+## Guides
+
+Three designed guides ship with jackpoint. Read them in the browser, or take the PDF.
+
+- **[Quick start](assets/quickstart.html)** ([PDF](jackpoint-quickstart.pdf)) — your first ten minutes, written for someone who has never opened a terminal.
+- **[Your AI toolkit, mastered](assets/power-guide.html)** ([PDF](jackpoint-power-guide.pdf)) — which CLI to reach for, and what each one is actually good at.
+- **[Keep this MacBook private](assets/privacy-guide.html)** ([PDF](jackpoint-privacy-guide.pdf)) — what leaves your machine, what never does, and how to run entirely offline.
+
 ## License
 
 MIT. By [DareDev256](https://github.com/DareDev256). Issues and PRs welcome.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 — 2026-09-01
+
+### Added
+- **Power guide** (`assets/power-guide.html` + PDF) — which CLI to reach for and what each one is actually good at.
+- **Privacy guide** (`assets/privacy-guide.html` + PDF) — what leaves the machine, what never does, and how to run fully offline.
+- A **Guides** section in the README linking all three guides. Nothing linked them before — including the quick start that shipped in 1.0.2. The docs existed; no path led to them.
+
+### Fixed
+- Both new guides shipped with no `<title>` element, rendering as an untitled browser tab, and with no `lang` attribute on `<html>`. Added both, matching the quick start.
+
 ## 1.0.2 — 2026-05-31
 
 First public release. One command installs every AI coding CLI on macOS.

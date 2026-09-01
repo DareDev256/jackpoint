@@ -1,0 +1,692 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>jackpoint — Your AI Toolkit, Mastered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E0F13;--card:#1A1C22;--card2:#202329;--text:#E7E7EA;--dim:#9AA0AB;
+--line:#2B2F37;--teal:#5EEAD4;--violet:#A78BFA;--amber:#F4B860;}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+@page{size:A4;margin:14mm 15mm 22mm;}
+html,body{margin:0;background:var(--ink);color:var(--text);
+font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:10.7pt;line-height:1.6;}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23pt;letter-spacing:-.4px;margin:0 0 4mm;line-height:1.08;}
+h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16pt;letter-spacing:-.2px;
+margin:0 0 4mm;padding-top:2mm;page-break-before:always;page-break-after:avoid;color:#fff;}
+h2:first-of-type{page-break-before:avoid;}
+h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11.5pt;margin:6mm 0 2mm;color:var(--teal);page-break-after:avoid;}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin:0 0 1.5mm;}
+p{margin:0 0 3mm;} strong{color:#fff;font-weight:600;} em{color:var(--dim);}
+ul,ol{margin:0 0 3mm;padding-left:5mm;} li{margin:0 0 1.5mm;}
+a{color:var(--teal);text-decoration:none;}
+code,.command,.ic{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:9pt;
+color:var(--ink);background:linear-gradient(180deg,#7ff0dd,var(--teal));padding:1.5px 7px;border-radius:7px;
+box-shadow:0 0 0 1px rgba(94,234,212,.35);white-space:nowrap;}
+pre,.code-block{background:#070809;border:1px solid var(--line);border-radius:11px;padding:4mm;
+font-family:'JetBrains Mono',monospace;font-size:8.3pt;line-height:1.55;color:#cfd2d6;overflow:hidden;
+white-space:pre-wrap;word-break:break-word;margin:0 0 4mm;page-break-inside:avoid;}
+pre code,.code-block code{background:none;color:#cfd2d6;box-shadow:none;padding:0;font-weight:500;white-space:pre-wrap;}
+table{width:100%;border-collapse:collapse;margin:0 0 4mm;font-size:9pt;page-break-inside:avoid;}
+th{font-family:'Space Grotesk';font-weight:600;text-align:left;color:var(--teal);
+border-bottom:1px solid var(--teal);padding:2.5mm 3mm;font-size:8.5pt;text-transform:uppercase;letter-spacing:.5px;}
+td{border-bottom:1px solid var(--line);padding:2.5mm 3mm;vertical-align:top;color:var(--text);}
+tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+.note,.warning,.callout{border-radius:12px;padding:3.5mm 4mm;margin:0 0 4mm;font-size:9.8pt;page-break-inside:avoid;}
+.note,.callout{background:rgba(94,234,212,.07);border:1px solid rgba(94,234,212,.32);}
+.warning{background:rgba(244,184,96,.08);border:1px solid rgba(244,184,96,.4);}
+.note strong,.callout strong{color:var(--teal);} .warning strong{color:var(--amber);}
+.section{page-break-inside:auto;}
+.doc{padding:2mm 0;}
+.foot{position:fixed;bottom:6mm;left:15mm;right:15mm;display:flex;justify-content:space-between;
+font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--dim);letter-spacing:1px;border-top:1px solid var(--line);padding-top:2mm;}
+.wm{color:var(--teal);font-weight:700;}
+/* cover */
+.cover{height:247mm;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;page-break-after:always;}
+.cover h1{font-size:34pt;margin:6mm 0 4mm;}
+.cover .tg{color:var(--dim);max-width:120mm;font-size:11pt;line-height:1.6;}
+.glow{filter:drop-shadow(0 0 14px rgba(94,234,212,.5)) drop-shadow(0 0 24px rgba(167,139,250,.3));}
+.chiprow{display:flex;flex-wrap:wrap;gap:3mm;margin:0 0 4mm;}
+</style></head><body><div class="cover"><svg class="glow" width="130" height="165" viewBox="0 0 150 190" fill="none">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5EEAD4"/><stop offset="1" stop-color="#A78BFA"/></linearGradient></defs>
+<circle cx="75" cy="70" r="42" stroke="url(#g)" stroke-width="1.6" opacity=".9"/><circle cx="75" cy="70" r="30" stroke="url(#g)" stroke-width="1" opacity=".5"/>
+<circle cx="75" cy="70" r="9" fill="none" stroke="#5EEAD4" stroke-width="2"/><circle cx="75" cy="70" r="2.5" fill="#5EEAD4"/>
+<path d="M75 79 L75 150" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/><path d="M75 128 L90 128 M75 140 L86 140" stroke="#A78BFA" stroke-width="3" stroke-linecap="round"/>
+<path d="M40 172 H96" stroke="#2B2F37" stroke-width="1"/><rect x="40" y="167" width="8" height="11" rx="1.5" fill="#5EEAD4"/></svg><div class="kicker" style="margin-top:8mm">power-user guide</div><h1>Your AI Toolkit, Mastered</h1><div class="tg">How to actually get more done with Claude Code, Gemini, Qwen and the rest. Real workflows, hooks, skills, and MCPs. No fluff.</div></div><div class="doc"><div class="section">
+  <span class="kicker">01 · PHILOSOPHY</span>
+  <h2>These Are Agents, Not Chat</h2>
+  <p>You've got four AI tools now. Each one is a <strong>worker</strong>, not a conversation partner. Stop thinking of them as chatbots and start thinking of them as <strong>interns who actually work</strong>.</p>
+  
+  <h3>The Mindset Shift</h3>
+  <p>Instead of "write me an email," you say:</p>
+  <ul>
+    <li>"Draft a 3-sentence follow-up email to Sarah about the Tuesday meeting"</li>
+    <li>"Review the code in `src/payment.js` for security issues"</li>
+    <li>"Delete all `.jpg` files older than 2020 in my Downloads folder"</li>
+  </ul>
+  
+  <p>The difference: <strong>specificity and delegation</strong>. When you're specific about what you want and why, Claude (especially Claude Code) can actually <em>do the work</em>, not just suggest it.</p>
+  
+  <h3>The Work Cycle</h3>
+  <ol>
+    <li><strong>Brief it:</strong> "Here's the task, deadline, and constraints."</li>
+    <li><strong>Let it work:</strong> Don't interrupt. Don't second-guess. Let it make mistakes and fix them.</li>
+    <li><strong>Review once:</strong> Look at what it did. Say "ship it" or "here's what's wrong."</li>
+    <li><strong>One fix pass:</strong> Let it correct itself. Then you're done.</li>
+  </ol>
+  
+  <p style="margin-top: 25px;">The worst mistake: treating AI like a search engine. You don't need "Tell me how to write a Python script." You need <strong>"Write a Python script that reads a CSV and flags rows where column 3 > $5000."</strong> Then it goes and does it.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 2. WHICH TOOL FOR WHAT -->
+<div class="section">
+  <span class="kicker">02 · TOOLING</span>
+  <h2>The Right AI for the Right Job</h2>
+  
+  <p>You have four tools. They overlap. Here's how to pick.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Best For</th>
+        <th>Speed</th>
+        <th>Cost</th>
+        <th>When to Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Gemini (free)</strong></td>
+        <td>Quick questions, summaries, brainstorming</td>
+        <td>Fast</td>
+        <td>Free</td>
+        <td>Daily questions. Don't overthink it.</td>
+      </tr>
+      <tr>
+        <td><strong>Claude Code</strong></td>
+        <td>Code, files, projects, real work</td>
+        <td>Slow-medium</td>
+        <td>Per-use</td>
+        <td>Anything that involves reading/writing files or running commands</td>
+      </tr>
+      <tr>
+        <td><strong>Qwen (local)</strong></td>
+        <td>Private work, sensitive stuff, offline</td>
+        <td>Medium</td>
+        <td>Free (runs on your Mac)</td>
+        <td>Client data, passwords, confidential brainstorms</td>
+      </tr>
+      <tr>
+        <td><strong>Ollama (local)</strong></td>
+        <td>Coding, math, structured output</td>
+        <td>Medium</td>
+        <td>Free (local)</td>
+        <td>When you want to stay offline and fast</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>The Decision Tree</h3>
+  <p style="margin-top: 25px;">Ask yourself:</p>
+  <ul>
+    <li><strong>Does it involve files or code?</strong> → Claude Code</li>
+    <li><strong>Is it sensitive / confidential?</strong> → Qwen or Ollama (offline)</li>
+    <li><strong>Just a quick question?</strong> → Gemini</li>
+    <li><strong>Is your internet down?</strong> → Ollama or Qwen</li>
+    <li><strong>Need it now and it's simple?</strong> → Gemini</li>
+  </ul>
+
+  <h3>Real Example</h3>
+  <p><em>"I need to extract email addresses from a CSV file, check if they're valid, and flag duplicates."</em></p>
+  <ul>
+    <li>Claude Code → reads CSV, writes script, runs it, shows you results ✓</li>
+    <li>Gemini → can explain how, but won't actually do it</li>
+    <li>Qwen → could work, but slower than Claude</li>
+  </ul>
+  <p>Answer: <strong>Claude Code</strong>.</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 3. CLAUDE CODE SUPERPOWERS -->
+<div class="section">
+  <span class="kicker">03 · CLAUDE CODE CORE</span>
+  <h2>Claude Code's Three Superpowers</h2>
+
+  <h3>Superpower #1: CLAUDE.md (Your Personal Operating Manual)</h3>
+  
+  <p>Create a file called <span class="command">CLAUDE.md</span> in your project folder. This file tells Claude how <em>you</em> work and what you care about.</p>
+
+  <p><strong>What goes in CLAUDE.md?</strong></p>
+  <ul>
+    <li>How you like code formatted (spaces vs tabs, naming conventions)</li>
+    <li>Tools you always use (npm, pytest, Docker, etc.)</li>
+    <li>Folders and structure ("source code lives in src/, tests in tests/")</li>
+    <li>Commands to build/test ("run npm test before committing")</li>
+    <li>What NOT to do ("never push directly to main")</li>
+    <li>Common shortcuts and preferred libraries</li>
+  </ul>
+
+  <p style="margin-top: 20px;"><strong>Example CLAUDE.md:</strong></p>
+
+  <div class="code-block">
+# Project: My Investment Tracker
+
+## Build & Test
+- Build: `npm run build`
+- Test: `npm test`
+- Format: `npx prettier --write .`
+- Always test before committing.
+
+## Code Style
+- 2-space indents
+- camelCase for variables
+- Use async/await, not .then()
+- React hooks, not class components
+
+## Folder Structure
+- `/src` — React components
+- `/src/api` — API calls
+- `/tests` — Jest tests
+- `/docs` — Documentation
+
+## Architecture
+- All API calls go through src/api/client.js
+- State lives in Zustand, not Context
+- Never store passwords or API keys in code
+
+## Before Pushing
+- All tests pass
+- Run npm audit (fix warnings)
+- Update CHANGELOG.md
+  </div>
+
+  <p style="margin-top: 20px;"><strong>Why this matters:</strong> Claude learns these rules and follows them in <em>every session</em>. You never have to re-explain.</p>
+
+  <div class="note">
+    <strong>Pro tip:</strong> Keep CLAUDE.md under 200 lines. Longer files consume tokens and Claude may not follow them as reliably. If you've got a lot to say, break it into rules files inside <span class="command">.claude/rules/</span>.
+  </div>
+
+  <h3>Superpower #2: Slash Commands</h3>
+
+  <p>In Claude Code, type <span class="command">/</span> and you'll see a menu of commands. Here are the essentials:</p>
+
+  <ul>
+    <li><span class="command">/help</span> — Show all available commands</li>
+    <li><span class="command">/init</span> — Claude auto-generates a CLAUDE.md for your project by reading your code</li>
+    <li><span class="command">/memory</span> — View and edit your project memory (what Claude has learned about your project)</li>
+    <li><span class="command">/plan</span> — Claude outlines a multi-step plan before starting work</li>
+    <li><span class="command">/review</span> — Claude reviews code you've changed for bugs and quality</li>
+    <li><span class="command">/mcp</span> — See and manage your connected tools (MCP servers)</li>
+    <li><span class="command">/loop</span> — Repeat a task every N seconds/minutes (useful for polling)</li>
+  </ul>
+
+  <p style="margin-top: 20px;"><strong>Most useful for you:</strong> <span class="command">/init</span>, <span class="command">/memory</span>, and <span class="command">/plan</span>.</p>
+
+  <h3>Superpower #3: Auto Memory (Claude Learns As You Work)</h3>
+
+  <p>You don't write everything down. Claude Code watches you and learns:</p>
+  <ul>
+    <li>How to build your project</li>
+    <li>Where bugs usually hide</li>
+    <li>What you keep correcting it on</li>
+    <li>Tools and libraries you prefer</li>
+  </ul>
+
+  <p>It saves these as plain-text files you can read/edit:</p>
+
+  <div class="code-block">
+~/.claude/projects/&lt;your-project&gt;/memory/
+├── MEMORY.md           # Index (loaded every session)
+├── debugging.md        # Debugging patterns it's learned
+└── patterns.md         # Code patterns you use
+  </div>
+
+  <p style="margin-top: 15px;">Run <span class="command">/memory</span> to browse what it's learned. If it's wrong, edit it. If it's right, leave it.</p>
+
+  <div class="note">
+    <strong>Why auto memory is powerful:</strong> You spend less time re-explaining yourself. Claude gets smarter every session. And it's all plain text, so you can read it and fix it anytime.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 4. MCPs (CONNECTORS) -->
+<div class="section">
+  <span class="kicker">04 · MCPs</span>
+  <h2>MCPs: Give Claude Access to Your Tools</h2>
+
+  <p>MCP stands for "Model Context Protocol." In plain English: <strong>it's a connector that gives Claude access to things outside of Claude.</strong></p>
+
+  <p>Without MCPs: you copy data into chat. With MCPs: Claude reads it directly.</p>
+
+  <h3>What MCPs Can Connect To</h3>
+  <ul>
+    <li>Google Drive, Slack, Gmail, Notion, Jira</li>
+    <li>GitHub, GitLab</li>
+    <li>Databases (PostgreSQL, MongoDB)</li>
+    <li>APIs you build yourself</li>
+    <li>File systems on your computer</li>
+    <li>Calendar, contacts</li>
+  </ul>
+
+  <h3>How to Add an MCP</h3>
+
+  <p><strong>Step 1: Find one</strong> at the <a href="https://claude.ai/directory">Anthropic Directory</a> or just ask "are there MCPs for Slack?"</p>
+
+  <p><strong>Step 2: Add it with one command</strong></p>
+
+  <div class="code-block">
+# Add a GitHub MCP (to help Claude review code in GitHub)
+claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
+  --header "Authorization: Bearer YOUR_GITHUB_TOKEN"
+
+# Add a local Slack MCP (to let Claude read Slack channels)
+claude mcp add --transport http slack https://mcp.slack.com/mcp \
+  --header "Authorization: Bearer YOUR_SLACK_TOKEN"
+
+# Add a local stdio server (runs a script on your machine)
+claude mcp add --transport stdio local-db -- python3 /path/to/db-server.py
+  </div>
+
+  <p style="margin-top: 20px;"><strong>Step 3: Use it</strong></p>
+
+  <p>Once added, Claude automatically discovers what it can do. You just ask naturally:</p>
+  <div class="code-block">
+"Show me all GitHub issues with the label 'bug' from the last 7 days"
+"Find all Slack messages from this week that mention 'urgent'"
+"List all customers in the database who haven't paid an invoice"
+  </div>
+
+  <h3>5 MCPs Every Non-Techie Should Know</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>MCP</th>
+        <th>What It Does</th>
+        <th>Best For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>GitHub</strong></td>
+        <td>Claude reads your GitHub repos, reviews code, creates issues</td>
+        <td>Code review, managing projects</td>
+      </tr>
+      <tr>
+        <td><strong>Slack</strong></td>
+        <td>Claude reads Slack channels, can summarize discussions</td>
+        <td>Staying on top of team chat without reading everything</td>
+      </tr>
+      <tr>
+        <td><strong>Google Drive</strong></td>
+        <td>Claude reads docs, sheets, slides</td>
+        <td>Working with shared documents without copy/paste</td>
+      </tr>
+      <tr>
+        <td><strong>Jira</strong></td>
+        <td>Claude reads issues, can create/update them</td>
+        <td>Task management without switching apps</td>
+      </tr>
+      <tr>
+        <td><strong>Sentry</strong></td>
+        <td>Claude monitors your app's errors</td>
+        <td>Debugging crashes, finding patterns in errors</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Find your token:</strong> Most MCPs need an authentication token. For GitHub, go to github.com/settings/personal-access-tokens and create one. For Slack, go to api.slack.com/apps. The Anthropic Directory shows you exactly where to get one for each MCP.
+  </div>
+
+  <div class="warning">
+    <strong>Security note:</strong> Don't paste tokens into chat or save them in plain text. Store them safely, then only paste them once into the <span class="command">claude mcp add</span> command.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 5. HOOKS (AUTOMATION) -->
+<div class="section">
+  <span class="kicker">05 · HOOKS</span>
+  <h2>Hooks: Automate What Should Be Automatic</h2>
+
+  <p>Hooks are <strong>commands that run automatically at specific moments.</strong> They let you enforce rules without Claude having to think about them.</p>
+
+  <h3>When Hooks Run</h3>
+  <ul>
+    <li><strong>Before a file is edited:</strong> Validate it, check permissions</li>
+    <li><strong>After a file is edited:</strong> Auto-format it, lint it</li>
+    <li><strong>Before a commit:</strong> Run tests, check for secrets</li>
+    <li><strong>After a commit:</strong> Deploy, notify Slack</li>
+    <li><strong>When Claude needs input:</strong> Show a notification</li>
+  </ul>
+
+  <h3>Safe, Simple Example: Auto-Format After Every Edit</h3>
+
+  <p>Say you want code auto-formatted every time Claude edits a file. Add this to your <span class="command">.claude/settings.json</span>:</p>
+
+  <div class="code-block">
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write ."
+          }
+        ]
+      }
+    ]
+  }
+}
+  </div>
+
+  <p style="margin-top: 20px;"><strong>What this does:</strong> After Claude edits a file, Prettier auto-formats it. No thinking. Just happens.</p>
+
+  <h3>Another Example: Notify You When Claude Waits</h3>
+
+  <p>You don't want to watch the screen. Add a hook that notifies you when Claude needs input:</p>
+
+  <div class="code-block">
+{
+  "hooks": {
+    "Notification": [
+      {
+        "type": "command",
+        "command": "osascript -e 'display notification \"Claude needs your input\"'"
+      }
+    ]
+  }
+}
+  </div>
+
+  <p style="margin-top: 15px;">Now macOS will pop a notification. Your phone buzzes. You're not stuck watching.</p>
+
+  <div class="warning">
+    <strong>Keep hooks simple and safe.</strong> Hooks run automatically, so a broken hook can break your workflow. Test it manually first. Start with read-only stuff (checking files, sending notifications) before doing write/delete operations.
+  </div>
+
+  <div class="note">
+    <strong>Hooks are advanced.</strong> Don't obsess over them early. Master CLAUDE.md and MCPs first. Hooks are for when you've done the same thing three times and you're tired of it.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 6. SKILLS -->
+<div class="section">
+  <span class="kicker">06 · SKILLS</span>
+  <h2>Skills: Reusable Instructions</h2>
+
+  <p>A skill is a <strong>packaged set of instructions</strong> that you or Claude can invoke with a slash command.</p>
+
+  <h3>Built-in Skills You Already Have</h3>
+  <ul>
+    <li><span class="command">/code-review</span> — Review code for bugs and quality</li>
+    <li><span class="command">/debug</span> — Systematic debugging</li>
+    <li><span class="command">/help</span> — Help on any Claude Code feature</li>
+    <li><span class="command">/verify</span> — Verify that a change actually works</li>
+  </ul>
+
+  <h3>Create Your Own Skill</h3>
+
+  <p>Say you always ask Claude to "check this file for spelling and grammar." Make a skill so you can just say <span class="command">/proofread</span>.</p>
+
+  <p><strong>Step 1: Create the skill file</strong></p>
+
+  <div class="code-block">
+# Create this file: .claude/skills/proofread/SKILL.md
+
+# Proofread
+Review the text for:
+- Spelling errors
+- Grammar mistakes
+- Unclear sentences
+- Redundant phrases
+- Tone (is it professional? friendly? angry?)
+
+If you find issues, list them clearly and suggest fixes.
+Never rewrite the whole thing unless asked.
+  </div>
+
+  <p style="margin-top: 20px;"><strong>Step 2: Use it</strong></p>
+
+  <div class="code-block">
+/proofread
+
+Here's my email to the client. Can you check it?
+  </div>
+
+  <p style="margin-top: 15px;">Claude runs the skill and reviews your email.</p>
+
+  <div class="note">
+    <strong>When to make a skill:</strong>
+    <ul>
+      <li>You find yourself pasting the same instructions repeatedly</li>
+      <li>You have a multi-step checklist you want Claude to follow</li>
+      <li>You want to share a workflow with someone else</li>
+    </ul>
+    Don't make a skill for a one-time task. That's what conversation is for.
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 7. PRACTICAL WORKFLOWS -->
+<div class="section">
+  <span class="kicker">07 · WORKFLOWS</span>
+  <h2>How to Actually Get Things Done</h2>
+
+  <h3>The Claude Code Workflow</h3>
+
+  <ol>
+    <li><strong>Create a folder for the project</strong> (e.g., <span class="command">~/my-project</span>)</li>
+    <li><strong>Write or create a CLAUDE.md in the root</strong> (or run <span class="command">/init</span> to auto-generate one)</li>
+    <li><strong>Brief Claude clearly:</strong> "Do X, which involves Y, and we need it by Z"</li>
+    <li><strong>Let it work</strong> — don't interrupt. If it's stuck, you'll see it</li>
+    <li><strong>Review what it made</strong> — files, code, output, all visible</li>
+    <li><strong>Give one round of feedback</strong> — "this is wrong, fix it" — then let it fix it</li>
+    <li><strong>Done.</strong> You review one more time and ship.</li>
+  </ol>
+
+  <h3>Pattern: "I Have a Folder of Files"</h3>
+
+  <p><strong>Scenario:</strong> You have 200 photos and want to rename them all with dates.</p>
+
+  <p><strong>How to brief Claude:</strong></p>
+
+  <div class="code-block">
+I have a folder at ~/Photos/2024-12-15 with 200 image files.
+They're named IMG_1234.jpg, IMG_1235.jpg, etc.
+I want them renamed to PHOTO_2024-12-15_001.jpg, _002.jpg, etc.
+Write a script that does this and run it. Then show me the first 5 new filenames.
+  </div>
+
+  <p style="margin-top: 15px;">Claude will: read the folder, write a script, run it, show you the results. One request. Done.</p>
+
+  <h3>Pattern: "I Want This Automated"</h3>
+
+  <p><strong>Scenario:</strong> Every Friday morning, you want a summary of GitHub issues created this week.</p>
+
+  <p><strong>How to brief Claude:</strong></p>
+
+  <div class="code-block">
+I want a script that runs every Friday at 8 AM.
+It should fetch all GitHub issues from this week in my repo.
+Group them by label (bug, feature, question).
+Email me a summary with: count per label, list of titles.
+Use the GitHub MCP I have connected. Write the script and set up the schedule.
+  </div>
+
+  <p style="margin-top: 15px;">Claude will write the script and schedule it (or tell you how to if you need manual steps).</p>
+
+  <h3>Pattern: "This Code Is Broken"</h3>
+
+  <p><strong>Scenario:</strong> Your app crashes on startup and you don't know why.</p>
+
+  <p><strong>How to brief Claude:</strong></p>
+
+  <div class="code-block">
+My app crashes on startup. Here's the error message:
+[paste error]
+
+Go through the code and find the root cause. Then fix it and verify it works.
+  </div>
+
+  <p style="margin-top: 15px;">Claude will trace through the code, find the bug, fix it, run it. Done in minutes instead of hours.</p>
+
+  <h3>Efficiency Habits</h3>
+
+  <ul>
+    <li><strong>Be specific.</strong> "Fix the login bug" vs. "When users paste an email with spaces, the login endpoint rejects it as invalid. Fix this and test it."</li>
+    <li><strong>Let it run.</strong> Don't say "wait, maybe try this instead." Give it one direction, let it complete.</li>
+    <li><strong>Use a project folder.</strong> Keep related files together. CLAUDE.md lives in the root. Everything else is nearby.</li>
+    <li><strong>Review the code.</strong> You don't have to understand every line, but you should know if it looks reasonable.</li>
+    <li><strong>Test manually once.</strong> After Claude fixes something, click it, run it, make sure it works as expected.</li>
+    <li><strong>Commit with messages.</strong> If Claude made changes, commit them with a message so you have a record.</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- 8. DEEPER DIVES -->
+<div class="section">
+  <span class="kicker">08 · NEXT LEVEL</span>
+  <h2>Where to Go Deeper</h2>
+
+  <h3>Official Documentation</h3>
+  <ul>
+    <li><strong>Claude Code Docs:</strong> <a href="https://code.claude.com/docs">code.claude.com/docs</a> — Full reference. Includes all slash commands, settings, advanced features.</li>
+    <li><strong>MCP Directory:</strong> <a href="https://claude.ai/directory">claude.ai/directory</a> — Browse integrations you can connect.</li>
+    <li><strong>Agent SDK:</strong> If you want to build custom AI agents (advanced), see <a href="https://platform.claude.com">platform.claude.com</a>.</li>
+  </ul>
+
+  <h3>Features to Explore Later</h3>
+  <ul>
+    <li><strong>Sub-agents:</strong> Spawn multiple Claude agents working in parallel on different parts of a task</li>
+    <li><strong>Path-scoped rules:</strong> Different CLAUDE.md rules for different folders</li>
+    <li><strong>Plugins:</strong> Packaged extensions for Claude Code (like npm packages, but for AI)</li>
+    <li><strong>Routines:</strong> Schedule Claude tasks to run on a recurring schedule</li>
+    <li><strong>Desktop app:</strong> Visual diff viewing, multiple sessions side-by-side</li>
+  </ul>
+
+  <h3>When You Get Stuck</h3>
+  <ul>
+    <li>Run <span class="command">/help</span> in Claude Code for the built-in help</li>
+    <li>Check <a href="https://code.claude.com/docs">code.claude.com/docs</a> for the exact feature you need</li>
+    <li>Ask Claude itself: "How do I [thing]?" — it often knows</li>
+    <li>Most importantly: <strong>start small.</strong> CLAUDE.md → MCPs → Hooks. Don't try everything at once.</li>
+  </ul>
+
+  <h3>Advanced But Worth Knowing</h3>
+  <ul>
+    <li><strong>Settings file precedence:</strong> You can have global settings (<span class="command">~/.claude/settings.json</span>) and project settings (<span class="command">.claude/settings.json</span>). Project settings override global.</li>
+    <li><strong>Environment variables:</strong> You can set env vars that Claude Code sees, useful for API keys and configuration</li>
+    <li><strong>Permissions:</strong> You can whitelist or blacklist which commands Claude is allowed to run (security feature)</li>
+    <li><strong>Custom MCP servers:</strong> If you write code, you can build your own MCP server that Claude talks to</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- QUICK REFERENCE -->
+<div class="section">
+  <span class="kicker">APPENDIX · QUICK REFERENCE</span>
+  <h2>Cheat Sheet</h2>
+
+  <h3>Most Important Commands</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Command</th>
+        <th>What It Does</th>
+        <th>When to Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="command">claude</span></td>
+        <td>Start Claude Code in current folder</td>
+        <td>Every session start</td>
+      </tr>
+      <tr>
+        <td><span class="command">/init</span></td>
+        <td>Generate CLAUDE.md automatically</td>
+        <td>First time in a new project</td>
+      </tr>
+      <tr>
+        <td><span class="command">/memory</span></td>
+        <td>View/edit what Claude has learned</td>
+        <td>When something feels off or you want to see what it knows</td>
+      </tr>
+      <tr>
+        <td><span class="command">/plan</span></td>
+        <td>Claude outlines approach before working</td>
+        <td>Big, risky, or complex tasks</td>
+      </tr>
+      <tr>
+        <td><span class="command">/review</span></td>
+        <td>Review code for bugs/quality</td>
+        <td>Before committing code</td>
+      </tr>
+      <tr>
+        <td><span class="command">/mcp</span></td>
+        <td>Manage MCP connections</td>
+        <td>When adding/removing a tool connection</td>
+      </tr>
+      <tr>
+        <td><span class="command">claude mcp add</span></td>
+        <td>Add a new MCP server</td>
+        <td>When you find a tool to connect</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Files You'll Create</h3>
+
+  <ul>
+    <li><span class="command">CLAUDE.md</span> — Your project rules (in project root)</li>
+    <li><span class="command">.claude/settings.json</span> — Customizations for this project</li>
+    <li><span class="command">~/.claude/CLAUDE.md</span> — Your personal rules (global, all projects)</li>
+    <li><span class="command">.claude/skills/my-skill/SKILL.md</span> — Custom reusable commands</li>
+  </ul>
+
+  <h3>Five-Minute Startup Checklist</h3>
+
+  <p>New project? Do this:</p>
+
+  <ol>
+    <li>Make a folder for the project</li>
+    <li>Run <span class="command">claude</span> to start</li>
+    <li>Run <span class="command">/init</span> to auto-generate CLAUDE.md</li>
+    <li>Read and tweak CLAUDE.md (add any special rules)</li>
+    <li>Commit CLAUDE.md to git if it's a team project</li>
+    <li>Done. Ready to work.</li>
+  </ol>
+
+  <h3>Common Mistakes (Avoid These)</h3>
+
+  <ul>
+    <li><strong>Not being specific.</strong> "Fix this" is too vague. "The login page shows a 404 when I paste @example.com" is clear.</li>
+    <li><strong>Interrupting Claude while it's working.</strong> Let it finish. If it's genuinely stuck (5+ min with no output), then say something.</li>
+    <li><strong>Not using a project folder.</strong> Keeping related files scattered makes Claude's job harder. Group by project.</li>
+    <li><strong>Forgetting CLAUDE.md exists.</strong> Every time you explain something twice, add it to CLAUDE.md so it's remembered.</li>
+    <li><strong>Pasting tokens into chat.</strong> Use <span class="command">claude mcp add</span> to add auth securely, not by pasting in the conversation.</li>
+    <li><strong>Ignoring auto memory.</strong> It learns as you go. Check it now and then. It gets smarter.</li>
+  </ul>
+</div>
+
+<div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid #ddd; color: #666;">
+  <p><strong>You now have the tools and knowledge to work 3x faster.</strong></p>
+  <p style="font-size: 0.95em; margin-top: 10px;">Start with CLAUDE.md. Add MCPs when you find a tool. Automate with hooks only when you're tired of a manual task. Everything else is optional.</p>
+  <p style="font-size: 0.9em; margin-top: 20px; color: #999;">Last updated: 2026-05-31 · Based on Claude Code documentation</p>
+</div>
+
+</div>
+</div><div class="foot"><span class="wm">jackpoint</span><span>ai toolkit — power-user guide</span></div></body></html>

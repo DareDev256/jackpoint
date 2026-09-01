@@ -16,7 +16,7 @@
 
 set -uo pipefail
 
-VERSION="1.0.2"
+VERSION="1.1.0"
 WANT_LOCAL=0; WANT_UNCENSORED=0; MINIMAL=0
 for a in "$@"; do
   case "$a" in
