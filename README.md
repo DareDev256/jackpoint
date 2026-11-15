@@ -1,12 +1,20 @@
-# jackpoint
+# jackpoint: install Claude Code, Gemini CLI and Codex on a Mac
 
-One command sets up every AI coding CLI on your Mac. Claude Code, Gemini, Codex, qwen-code, opencode, and an optional offline model. No prior terminal experience required.
+One command installs every AI coding CLI on your Mac: Claude Code, Gemini CLI, OpenAI Codex CLI, qwen-code, opencode, and an optional offline model. It is written for people who have never opened a terminal.
+
+![Three pages of the quick start guide that ships with jackpoint: the cover, the five assistants, and the jackpoint cheatsheet](docs/screenshots/2026-11-15_quickstart-guide.png)
+
+## Quick start
+
+Open Terminal (Command+Space, type "Terminal", press Enter), paste this line and press Enter:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/DareDev256/jackpoint/main/install.sh | bash
 ```
 
-It installs Node (only if a tool needs it) and every CLI below. Re-running is safe: it skips what's already there and retries what failed.
+It installs Node (only if a tool needs it) and every CLI below. Re-running is safe: it skips what's already there and retries what failed. Prefer to look first? [Read the script before you pipe it to bash](#read-the-script-before-you-pipe-it-to-bash).
+
+macOS only. License: MIT, see [LICENSE](LICENSE).
 
 ## What you get
 
